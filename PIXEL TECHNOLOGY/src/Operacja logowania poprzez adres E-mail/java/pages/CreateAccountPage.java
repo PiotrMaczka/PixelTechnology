@@ -4,42 +4,46 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
-
 public class CreateAccountPage extends MainPage {
 
     public CreateAccountPage(WebDriver driver) {
         super(driver);
     }
 
-    public static final String BASE_URL = "https://radibox.szpital.gorlice.pl/";
-
-    @FindBy(xpath = "//div[contains(text(),'Zaloguj')]")
+    @FindBy(css = "div.pointer")
     public static
-    WebElement LoginButton;
+    WebElement loginButton;
 
-    @FindBy(css = "button.btn.btn-default.button-search")
-    static
-    WebElement searchButton;
+    @FindBy(xpath = "//span[contains(text(),'konsultant, pacjent')]")
+    public static
+    WebElement loginEmailButton;
 
-    @FindBy(css = ".page-heading.product-listing .heading-counter")
-    static
-    List<WebElement> headingCounter;
+    @FindBy(id = "username")
+    public static
+    WebElement usernameInput;
 
-    @FindBy(css = ".top-pagination-content.clearfix .product-count")
-    static
-    WebElement topPagination;
+    @FindBy(xpath = "//button[contains(text(),'Wyślij kod')]")
+    public static
+    WebElement sendCodeButton;
 
-    @FindBy(css = ".right-block .product-name")
-    static
-    List<WebElement> resultOfSearching;
+    @FindBy(id = "code")
+    public static
+    WebElement codeInput;
 
-    @FindBy(css = ".right-block .price.product-price")
-    static
-    List<WebElement> somePrice;
+    @FindBy(id = "password")
+    public static
+    WebElement passInput;
 
-    public static void clickOnLoginButton() {
-        LoginButton.click();
+    @FindBy(id = "password2")
+    public static
+    WebElement pass2Input;
 
-    }
+    @FindBy(xpath = "//button[text()='Zmień hasło']")
+    public static
+    WebElement changePassButton;
+
+    @FindBy(xpath = "//button[text()='Zaloguj się']")
+    public static
+    WebElement LogInButton;
+
 }

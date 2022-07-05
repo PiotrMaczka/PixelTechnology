@@ -4,21 +4,28 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CreateAccountPage;
+import pages.Useful;
 
 import java.util.concurrent.TimeUnit;
 
 public class TC_05_IncompleteEmailAddress {
     private WebDriver wd;
+    private pages.Useful Useful;
 
     @BeforeEach
     public void driverSetup() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         wd = new ChromeDriver();
+        wd.get(Useful.BASE_URL);
+        wd.manage().window().maximize();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        Assertions.assertTrue(wd.getCurrentUrl().contains(Useful.BASE_URL));
+
+        new CreateAccountPage(wd);
+        Useful = new Useful(wd);
     }
 
     @AfterEach
@@ -30,17 +37,14 @@ public class TC_05_IncompleteEmailAddress {
     @Test
     public void IncompleteEmail(){
 
-        String url = "https://radibox.szpital.gorlice.pl/";
+        pages.CreateAccountPage.loginButton.click();
+        pages.CreateAccountPage.loginEmailButton.click();
 
-        wd.get(url);
-        wd.findElement(By.xpath("//div[contains(text(),'Zaloguj')]")).click();
-        wd.findElement(By.xpath("//span[contains(text(),'konsultant, pacjent')]")).click();
+        pages.CreateAccountPage.usernameInput.clear();
+        pages.CreateAccountPage.usernameInput.sendKeys("testypixeltechnology");
 
-        WebElement userName = wd.findElement(By.id("username"));
-        userName.clear();
-        userName.sendKeys("testypixeltechnology");
+        pages.CreateAccountPage.sendCodeButton.click();
 
-        wd.findElement(By.xpath("//button[contains(text(),'Wyślij kod')]")).click();
         Assertions.assertTrue(wd.getPageSource().contains("Email lub numer telefonu komórkowego nie jest poprawny"));
     }
 }
